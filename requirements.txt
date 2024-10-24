@@ -1,0 +1,5 @@
+langchain_openai==0.2.3
+langgraph==0.2.39
+loguru==0.7.2
+pydantic==2.9.2
+python-dotenv==1.0.1

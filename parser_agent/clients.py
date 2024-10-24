@@ -1,7 +1,8 @@
 import os
 from pathlib import Path
-from langchain_openai import ChatOpenAI
+
 from dotenv import load_dotenv
+from langchain_openai import ChatOpenAI
 
 load_dotenv(dotenv_path=Path(__file__).parent / ".env")
 

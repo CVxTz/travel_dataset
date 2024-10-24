@@ -1,10 +1,11 @@
-from pydantic import BaseModel, Field
-from typing import List, Optional, Tuple
 from enum import Enum
+from typing import List, Optional, Tuple
+
+from pydantic import BaseModel, Field
 
 
 class PageType(str, Enum):
-    """Type of climate at the location"""
+    """Type of page"""
 
     country = "country"
     city = "city"
@@ -195,16 +196,17 @@ class City(BaseModel):
     """Model for a tourist location"""
 
     name: str = Field(..., description="Name of the city")
-    description: str = Field(..., description="Text description of the city")
+    description: str = Field(..., description="Few sentences description of the city, can be long if there is enough "
+                                              "relevant information. Includes what the city is famous for and why people might visit it.")
 
     country: str = Field(..., description="Country")
     continent: Optional[str] = Field(
         None, description="Continent if applicable, otherwise leave empty"
     )
 
-    location_long_lat: Optional[Tuple[float, float]] = Field(
-        None,
-        description="Geographic coordinates (longitude, latitude) of the location, null if unknown",
+    location_lat_long: Optional[list[float]] = Field(
+        [],
+        description="Geographic coordinates [latitude, longitude] of the location, [] if unknown",
     )
     climate_type: ClimateType = Field(..., description="Type of climate at the city")
 
@@ -229,7 +231,7 @@ city_example = City(
     name="ABC",
     country="DEF",
     continent="",
-    location_long_lat=(-1, 1),
+    location_lat_long=[-1, 1],
     climate_type=ClimateType.tropical,
     description="GHI",
 )

@@ -5,20 +5,19 @@ from parser_agent.state import OverallState
 
 def parse_city_edge(state: OverallState) -> NodeNames:
     if state.page_type == PageType.city:
-        return NodeNames.parse_city
+        return NodeNames.parse_city.value
     else:
-        return NodeNames.end
+        return NodeNames.end.value
+
 
 def parse_attraction_edge(state: OverallState) -> NodeNames:
     if state.page_type in [PageType.city, PageType.attraction, PageType.country]:
-        return NodeNames.parse_attraction
+        return NodeNames.parse_attraction.value
     else:
-        return NodeNames.end
-
+        return NodeNames.end.value
 
 
 if __name__ == "__main__":
     _state = OverallState(page_content="", page_summary="", page_type=PageType.city)
 
-    print(parse_city_edge(_state)) # returns NodeNames.parse_city
-
+    print(parse_city_edge(_state))  # returns NodeNames.parse_city

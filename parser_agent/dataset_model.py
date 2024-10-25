@@ -196,8 +196,11 @@ class City(BaseModel):
     """Model for a tourist location"""
 
     name: str = Field(..., description="Name of the city")
-    description: str = Field(..., description="Few sentences description of the city, can be long if there is enough "
-                                              "relevant information. Includes what the city is famous for and why people might visit it.")
+    description: str = Field(
+        ...,
+        description="Few sentences description of the city, can be long if there is enough "
+        "relevant information. Includes what the city is famous for and why people might visit it.",
+    )
 
     country: str = Field(..., description="Country")
     continent: Optional[str] = Field(

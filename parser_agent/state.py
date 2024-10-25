@@ -1,16 +1,20 @@
-from typing import Annotated, Optional
+from typing import Optional
 
-from langchain_core.messages import AnyMessage
-from langgraph.graph.message import add_messages
-from pydantic import BaseModel
+from pydantic import BaseModel, computed_field
 
-from parser_agent.dataset_model import PageType, Cities, Attractions
+from parser_agent.dataset_model import Attractions, Cities, PageType
 
 
 class OverallState(BaseModel):
+    page_title: str
     page_content: str
-    page_summary: str
     page_type: PageType = PageType.unknown
     cities: Optional[Cities] = None
     attractions: Optional[Attractions] = None
-    messages: Annotated[list[AnyMessage], add_messages] = []
+    url: Optional[str] = None
+    # messages: Annotated[list[AnyMessage], add_messages] = []
+
+    @computed_field
+    @property
+    def page_summary(self) -> str:
+        return f"{self.page_title} {self.page_content[:400]}"

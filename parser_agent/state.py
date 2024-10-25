@@ -13,8 +13,3 @@ class OverallState(BaseModel):
     attractions: Optional[Attractions] = None
     url: Optional[str] = None
     # messages: Annotated[list[AnyMessage], add_messages] = []
-
-    @computed_field
-    @property
-    def page_summary(self) -> str:
-        return f"{self.page_title} {self.page_content[:400]}"

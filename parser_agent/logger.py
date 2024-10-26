@@ -27,4 +27,5 @@ class InterceptHandler(logging.Handler):
             level, record.getMessage()
         )
 
+
 logging.basicConfig(handlers=[InterceptHandler()], level=0, force=True)

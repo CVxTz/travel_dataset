@@ -34,6 +34,8 @@ if __name__ == "__main__":
 
     import matplotlib.image as mpimg
     import matplotlib.pyplot as plt
+    from devtools import pprint
+    from langchain_community.document_loaders import WikipediaLoader
 
     png_bytes = app.get_graph().draw_png()
 
@@ -53,11 +55,15 @@ if __name__ == "__main__":
     plt.show()
 
     # Example Usage
-    page_content = 'El Jadida (Arabic: الجديدة, romanized: al-Jadīda, [alʒadiːda]) is a major port city on the Atlantic coast of Morocco, located 96 kilometres (60 mi) south of the city of Casablanca, in the province of El Jadida and the region of Casablanca-Settat.[5][6] It has a population of 170,956 as of 2023.[7][unreliable source]The fortified city, built by the Portuguese at the beginning of the 16th century and named Mazagan (Mazagão in Portuguese), was given up by the Portuguese in 1769 and incorporated into Morocco. El Jadida\'s old city sea walls are one of the Seven Wonders of Portuguese Origin in the World.[8] The Portuguese Fortified City of Mazagan was registered as a UNESCO World Heritage Site in 2004, on the basis of its status as an "outstanding example of the interchange of influences between European and Moroccan cultures" and as an "early example of the realisation of the Renaissance ideals integrated with Portuguese construction technology". According to UNESCO,[9] the most important buildings from the Portuguese period are the cistern and the Church of the Assumption, both in a Manueline style.[10]The city is a popular resort and destination for both Moroccan and international tourists.[11][12] An important industrial complex, Jorf Lasfar, lies 20 kilometres to the south.[13] Coordinates: 33°14′N 8°30′W '
-    initial_state = OverallState(page_title="El Jadida", page_content=page_content)
+    docs = WikipediaLoader(query="Tourism in Paris", load_max_docs=1).load()
+
+    page_title = docs[0].metadata["title"]
+    page_content = docs[0].page_content[:4000]
+    initial_state = OverallState(page_title=page_title, page_content=page_content)
 
     final_state_dict = app.invoke(initial_state)
 
     final_state = OverallState(**final_state_dict)
 
-    print(final_state)
+    pprint(final_state.cities)
+    pprint(final_state.attractions)
